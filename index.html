@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공유 경제와 구독 경제</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+    header {
+        background-color: #013B84;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    .section {
+        padding: 40px 20px;
+        margin: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .chart-container {
+        width: 80%;
+        margin: auto;
+        padding: 20px 0;
+    }
+    .button {
+        background-color: #013B84;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px; /* 최대 너비 설정 */
+    max-height: 80%; /* 최대 높이 설정 */
+    overflow-y: auto; /* 세로 스크롤 가능 */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* 팝업이 다른 요소 위에 나타나도록 설정 */
+  }
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9;
+    }
+    
+</style>
+
+
+</head>
+<body>
+  <div class="header" onclick="hideHeader()">2024 인문자연탐사 A04조 김준형 김성윤 이준우 유용민 </div>
+    <div class="container">
+    <header>
+        <h1>공유 경제와 구독 경제</h1>
+        <p>소비 패턴의 변화에 대한 조사와 플랫폼 추천</p>
+    </header>
+
+    <section class="section">
+    <h2>문헌 연구</h2>
+    <p>*파란색 팝업 버튼을 누르세요</p> 
+    <ul>
+        <li>
+            <h3><button class="button" onclick="showPopup('sharingEconomyPopup')">공유 경제</button></h3>
+            <p>자원의 최적화를 목표로 하며, 개인이 자산을 공유하여 소득을 창출하는 모델입니다.</p>
+        </li>
+        <li>
+            <h3><button class="button" onclick="showPopup('subscriptionEconomyPopup')">구독 경제</button></h3>
+            <p>소유보다는 지속적인 접근에 중점을 두며, 안정적인 수익 흐름을 보장하는 모델입니다.</p>
+        </li>
+        <li>
+            <h3><button class="button" onclick="showPopup('sharingNegativesPopup')">공유 경제의 부정적 측면</button></h3>
+            <p>규제 문제와 시장 독점화 위험이 존재합니다.</p>
+        </li>
+        <li>
+            <h3><button class="button" onclick="showPopup('subscriptionNegativesPopup')">구독 경제의 부정적 측면</button></h3>
+            <p>데이터 프라이버시 우려와 과소비 문제를 초래할 수 있습니다.</p>
+        </li>
+    </ul>
+</section>
+
+<!-- 오버레이 -->
+<div id="overlay" class="overlay" onclick="closeAllPopups()"></div>
+
+<!-- 팝업창 -->
+<div id="sharingEconomyPopup" class="popup">
+    <h3>공유 경제</h3>
+    <p>공유 경제는 활용도가 낮은 자원의 최적화를 목표로 하는 개념으로, Uber와 Airbnb와 같은 플랫폼을 통해 구현된다. 이러한 플랫폼은 개인이 차량이나 부동산과 같은 자산을 공유하여 소득을 창출할 수 있도록 한다. 이 모델은 공급자와 소비자 모두에게 비용 절감과 상품 및 서비스에 대한 유연한 접근을 제공함으로써 이익을 안겨준다. 더불어 자원의 재사용과 공유를 촉진하여 새로운 생산의 필요성을 줄이고, 지속 가능성에 기여하는 측면도 강조된다.</p>
+    <button class="button" onclick="hidePopup()">닫기</button>
+</div>
+
+<div id="subscriptionEconomyPopup" class="popup">
+    <h3>구독 경제</h3>
+    <p>구독 경제는 소유의 개념보다는 지속적인 접근에 중점을 둔다. Netflix, Spotify와 같은 미디어 서비스 및 다양한 SaaS(Software as a Service) 플랫폼은 구독 기반으로 서비스를 제공하며, 소비자는 구독 기간 동안 제품이나 서비스를 이용할 수 있다. 이 모델은 장기적인 고객 관계를 형성하고, 기업에게 안정적인 수익 흐름을 보장하는 데 효과적이다. 또한 정기적인 업데이트나 새로운 콘텐츠의 추가를 통해 소비자에게 유연성과 편리함을 제공한다.</p>
+    <button class="button" onclick="hidePopup()">닫기</button>
+</div>
+
+<div id="sharingNegativesPopup" class="popup">
+    <h3>공유 경제의 부정적 측면</h3>
+    <ul>
+        <li><strong>규제 문제:</strong> 공유 경제 모델은 종종 법적 회색지대에서 운영되며, 특히 숙박 및 교통 분야에서 지역 규제와 충돌하는 경우가 많다.</li>
+        <li><strong>시장 독점화:</strong> 대형 플랫폼의 성장으로 인해 소규모 경쟁업체가 몰락할 위험이 있으며, 이로 인해 시장의 다양성이 줄어들고 사용자에게 더 높은 수수료가 부과될 가능성이 있다.</li>
+    </ul>
+    <button class="button" onclick="hidePopup()">닫기</button>
+</div>
+
+<div id="subscriptionNegativesPopup" class="popup">
+    <h3>구독 경제의 부정적 측면</h3>
+    <ul>
+        <li><strong>데이터 프라이버시 우려:</strong> 구독 모델은 종종 개인 데이터를 공유해야 하는 구조로 되어 있어, 데이터 보안과 프라이버시 침해에 대한 우려가 존재한다.</li>
+        <li><strong>과소비 및 낭비 증가:</strong> 지속적인 콘텐츠 및 제품 공급은 소비자에게 과소비를 유도할 수 있으며, 이로 인해 환경적 지속 가능성 노력에 반하는 결과를 초래할 수 있다.</li>
+    </ul>
+    <button class="button" onclick="hidePopup()">닫기</button>
+</div>
+
+<script>
+    function showPopup(popupId) {
+        document.getElementById(popupId).style.display = 'block';
+        document.getElementById('overlay').style.display = 'block'; // 오버레이 표시
+    }
+
+    function closeAllPopups() {
+        var popups = document.getElementsByClassName("popup");
+        for (var i = 0; i < popups.length; i++) {
+            popups[i].style.display = 'none';
+        }
+        document.getElementById('overlay').style.display = 'none'; // 오버레이 숨기기
+    }
+</script>
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+        z-index: 999; /* 팝업보다 아래에 위치 */
+    }
+</style>
+
+
+    <section class="section">
+    <h2>데이터 시각화</h2>
+
+    <div class="chart-container">
+        <canvas id="subscriptionUsersChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="subscriptionPerceptionChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="sharingUsageChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="sharingPerceptionChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="subscriptionVsSharingChart"></canvas>
+    </div>
+</section>
+
+<section class="section">
+    <h2>설문 조사 결과</h2>
+    <p>설문 조사 결과, 구독 경제와 공유 경제에 대한 인식과 실제 사용 현황을 확인할 수 있었습니다.</p>
+    <h3>구독 경제 플랫폼 사용 현황</h3>
+    <p>총 응답자 수: 76명</p>
+    <ul>
+        <li>쿠팡 플레이: 29명</li>
+        <li>넷플릭스: 34명</li>
+        <li>티빙: 19명</li>
+        <li>디즈니+: 9명</li>
+        <li>왓챠: 1명</li>
+        <li>웨이브: 11명</li>
+        <li>유튜브 프리미엄: 8명</li>
+        <li>아이클라우드: 3명</li>
+        <li>멜론: 2명</li>
+        <li>ChatGPT: 4명</li>
+        <li>스포티파이: 4명</li>
+    </ul>
+    
+    <h3>구독 경제에 대한 인식</h3>
+    <p>총 응답자 수: 76명</p>
+    <ul> 
+        <li>긍정적: 61명</li>
+        <li>보통: 5명</li>
+        <li>부정적: 10명</li>
+    </ul>
+    <h3>구독 경제의 장점</h3>
+    <p>최신 콘텐츠와 다양한 선택지를 제공하여 소비자에게 편리함을 주고 있습니다.</p>
+    
+    <h3>공유 경제 사용 현황</h3>
+    <p>총 응답자 수: 74명(복수 응답 가능)</p>
+    <ul>
+        <li>전동 킥보드 및 자전거: 36명</li>
+        <li>숙박 공유: 21명</li>
+        <li>카세어링: 17명</li>
+        <li>승차 공유: 19명</li>
+        <li>사용한 적 없음: 16명</li>
+    </ul>
+    
+    <h3>공유 경제에 대한 인식</h3>
+    <p>총 응답자 수: 76명</p>
+    <ul>
+        <li>긍정적: 55명</li>
+        <li>보통: 12명</li>
+        <li>부정적: 9명</li>
+    </ul>
+</section>
+
+<section class="section">
+    <h2>카테고리별 구독 및 공유 경제 서비스 추천</h2>
+    <ul>
+        <li>
+            <h3><button class="button" onclick="showPopup('entertainmentPopup')">엔터테인먼트 (Entertainment)</button></h3>
+            <p>영화, 음악, 게임 등 다양한 콘텐츠를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 넷플릭스, 스포티파이, 게임 공유 플랫폼 등이 있습니다.</p>
+        </li>
+        <li>
+            <h3><button class="button" onclick="showPopup('gameTechPopup')">게임 및 기술 (Gaming & Technology)</button></h3>
+            <p>게임, 소프트웨어, 하드웨어 등 기술 관련 제품 및 서비스를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 클라우드 게임 서비스, 소프트웨어 구독 서비스 등이 있습니다.</p>
+        </li>
+        <li>
+            <h3><button class="button" onclick="showPopup('healthFitnessPopup')">건강 및 피트니스 (Health & Fitness)</button></h3>
+            <p>헬스, 요가, 운동 등 건강 관련 서비스를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 온라인 피트니스 클래스, 운동 기구 렌탈 서비스 등이 있습니다.</p>
+        </li>
+        <li>
+            <h3><button class="button" onclick="showPopup('consumerGoodsPopup')">소비 및 배달 서비스 (Consumer Goods & Delivery Services)</button></h3>
+            <p>식료품, 생필품 등 다양한 상품을 정기적으로 배송받는 서비스입니다. 대표적인 서비스로는 식료품 정기 배송 서비스, 화장품 구독 서비스 등이 있습니다.</p>
+        </li>
+        <li>
+            <h3><button class="button" onclick="showPopup('educationLearningPopup')">교육 및 학습 (Education & Learning)</button></h3>
+            <p>온라인 강의, 외국어 학습 등 교육 관련 서비스를 구독하는 서비스입니다. 대표적인 서비스로는 온라인 강의 플랫폼, 외국어 학습 앱 등이 있습니다.</p>
+        </li>
+        <li>
+            <h3><button class="button" onclick="showPopup('lifestylePopup')">생활 (Lifestyle)</button></h3>
+            <p>미용, 여행, 렌탈 등 다양한 생활 관련 서비스를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 미용 제품 구독 서비스, 여행 상품 구독 서비스 등이 있습니다.</p>
+        </li>
+    </ul>
+</section>
+
+    <!-- 엔터테인먼트 팝업 -->
+  <div id="entertainmentPopup" class="popup">
+    <h2>엔터테인먼트</h2>
+    <ul>
+        <li><button class="button" onclick="showPopup('videoStreamingPopup')">비디오 스트리밍</button></li>
+        <li><button class="button" onclick="showPopup('musicStreamingPopup')">음악 스트리밍</button></li>
+        <li><button class="button" onclick="showPopup('audiobookPopup')">오디오북 및 전자책</button></li>
+    </ul>
+    <button class="button" onclick="hidePopup()">닫기</button>
+  </div>
+
+
+<!-- 비디오 스트리밍 팝업 -->
+<div id="videoStreamingPopup" class="popup">
+    <h2>비디오 스트리밍</h2>
+    <p>비디오 스트리밍 서비스는 넷플릭스, 디즈니+, 쿠팡플레이 등의 플랫폼을 통해 영화와 드라마를 시청할 수 있습니다.</p>
+
+    <h3>넷플릭스 (Netflix)</h3>
+    <p>
+        설명: 세계 최대 규모의 스트리밍 서비스로, 다양한 국가의 드라마, 영화, 다큐멘터리, 애니메이션 등을 제공합니다. 
+        오리지널 콘텐츠가 강세이며, 개인 맞춤형 추천 시스템을 통해 사용자의 취향에 맞는 콘텐츠를 제시합니다.
+    </p>
+    <h4>요금제:</h4>
+    <ul>
+        <li>광고형 스탠다드: 5,500원/월 (1080p, 동시 시청 2대, 일부 콘텐츠 제한)</li>
+        <li>스탠다드: 13,500원/월 (1080p, 동시 시청 2대)</li>
+        <li>프리미엄: 17,000원/월 (4K HDR, 동시 시청 4대)</li>
+    </ul>
+    <p><a href="https://www.netflix.com/kr/" target="_blank">넷플릭스 바로가기</a></p>
+
+    <h3>디즈니+ (Disney+)</h3>
+    <p>
+        설명: 디즈니, 픽사, 마블, 스타워즈 등 디즈니 산하의 다양한 콘텐츠를 한곳에서 만날 수 있는 서비스입니다. 
+        어린이부터 성인까지 즐길 수 있는 다채로운 콘텐츠를 제공하며, 특히 디즈니 팬들에게 인기가 많습니다.
+    </p>
+    <h4>요금제:</h4>
+    <ul>
+        <li>디즈니+ 스탠다드: 9,900원/월, 99,000원/연 (1080p)</li>
+        <li>디즈니+ 프리미엄: 13,900원/월, 139,000원/연 (4K)</li>
+    </ul>
+    <p><a href="https://www.disneyplus.com/ko-kr" target="_blank">디즈니+ 바로가기</a></p>
+
+    <h3>TVING</h3>
+    <p>
+        설명: CJ ENM의 OTT 서비스로, tvN, Mnet 등 CJ ENM 채널의 드라마, 예능 프로그램을 실시간 또는 VOD로 시청할 수 있습니다. 
+        최신 드라마를 빠르게 만나볼 수 있으며, 다양한 장르의 영화도 제공합니다.
+    </p>
+    <h4>요금제:</h4>
+    <ul>
+        <li>기본: 약 9,500원/월 (720p)</li>
+        <li>광고형 스탠다드: 5,500원/월 (1080p)</li>
+        <li>스탠다드: 13,500원/월 (1080p)</li>
+        <li>프리미엄: 약 17,000원/월 (4K)</li>
+    </ul>
+    <p><a href="https://tving.com/" target="_blank">TVING 바로가기</a></p>
+
+    <h3>웨이브 (Wavve)</h3>
+    <p>
+        설명: SK텔레콤의 OTT 서비스로, KBS, MBC, SBS 등 지상파 방송사의 드라마, 예능 프로그램을 비롯해 다양한 콘텐츠를 제공합니다. 
+        특히 지상파 드라마를 즐기는 사용자들에게 인기가 많습니다.
+    </p>
+    <h4>요금제:</h4>
+    <ul>
+        <li>기본: 9,000원/월 (HD)</li>
+        <li>스탠다드: 12,500원/월 (FHD)</li>
+        <li>프리미엄: 16,000원/월 (4K)</li>
+    </ul>
+    <p><a href="https://www.wavve.com/" target="_blank">웨이브 바로가기</a></p>
+
+    <h3>WATCHA</h3>
+    <p>
+        설명: 개인 맞춤형 추천 시스템을 강점으로 하는 OTT 서비스입니다. 영화 마니아들을 위한 다양한 장르의 영화를 제공하며, 
+        큐레이션 콘텐츠를 통해 새로운 영화를 발견할 수 있습니다.
+    </p>
+    <h4>요금제:</h4>
+    <ul>
+        <li>베이직: 7,900원/월 (FHD)</li>
+        <li>프리미엄: 12,900원/월 (4K)</li>
+    </ul>
+    <p><a href="https://watcha.com/" target="_blank">WATCHA 바로가기</a></p>
+
+    <h3>쿠팡 플레이 (Coupang Play)</h3>
+    <p>
+        설명: 쿠팡의 OTT 서비스로, 쿠팡 회원이라면 추가 비용 없이 이용할 수 있습니다. 
+        오리지널 콘텐츠와 함께 다양한 영화, 드라마를 제공하며, 쿠팡 로켓배송과 연계된 이벤트를 진행하기도 합니다.
+    </p>
+    <h4>요금제:</h4>
+    <ul>
+        <li>7,890원/월 (프리미엄 쿠팡 회원 이용 가능)</li>
+    </ul>
+    <p><a href="https://play.coupang.com/" target="_blank">쿠팡 플레이 바로가기</a></p>
+
+    <h3>라프텔 (Laftel)</h3>
+    <p>
+        설명: 애니메이션 전문 OTT 서비스입니다. 일본 애니메이션을 중심으로 다양한 국가의 애니메이션을 제공하며, 
+        정식 라이선스를 통해 고화질 영상을 감상할 수 있습니다.
+    </p>
+    <h4>요금제:</h4>
+    <ul>
+        <li>베이직: 9,900원/월 (동시접속 1인)</li>
+        <li>프리미엄: 14,900원/월 (동시접속 4인)</li>
+    </ul>
+    <p><a href="https://laftel.net" target="_blank">라프텔 바로가기</a></p>
+
+    <h3>유튜브 프리미엄 (YouTube Premium)</h3>
+    <p>
+        설명: 유튜브 프리미엄은 유튜브를 더 편리하게 이용할 수 있도록 해주는 유료 멤버십 서비스입니다. 
+        광고 없이 영상을 시청하고, 백그라운드 재생, 오프라인 저장 등 다양한 기능을 이용할 수 있습니다. 
+        특히 유튜브 뮤직 프리미엄이 포함되어 있습니다.
+    </p>
+    <h4>요금제:</h4>
+    <ul>
+        <li>14,900원/월</li>
+    </ul>
+    <p><a href="https://www.youtube.com/premium" target="_blank">유튜브 프리미엄 바로가기</a></p>
+
+    <button class="button" onclick="hidePopup()">닫기</button>
+    <button class="button" onclick="hidePopup(); document.getElementById('entertainmentPopup').style.display = 'block';">뒤로 가기</button>
+</div>
+
+
+<!-- 음악 스트리밍 팝업 -->
+<div id="musicStreamingPopup" class="popup">
+    <h2>음악 스트리밍 서비스</h2>
+    
+    <h3>스포티파이 (Spotify)</h3>
+    <p><strong>설명:</strong> 세계 최대 규모의 음악 스트리밍 서비스로, 방대한 음원 라이브러리를 보유하고 있습니다. 개인 맞춤형 플레이리스트, 팟캐스트 등 다양한 기능을 제공하며, 무료 버전과 유료 버전을 선택할 수 있습니다.</p>
+    <p><strong>요금제:</strong><br>
+    베이직: 8,690원/월 <br>
+    개인: 약 11,900원/월<br>
+    듀오: 17,985원/월</p>
+    <a href="https://open.spotify.com/">Spotify</a>
+
+    <h3>멜론 (Melon)</h3>
+    <p><strong>설명:</strong> 국내 최대 음원 사이트로, K-POP을 중심으로 다양한 장르의 음악을 제공합니다. 차트, 앨범, 아티스트 등 다양한 정보를 확인할 수 있으며, 음악 감상 외에도 커뮤니티 기능도 활발합니다.</p>
+    <p><strong>요금제:</strong> (정기권, 무제한 듣기)<br>
+    Hi-Fi 스트리밍 클럽: 12,000원 (고음질 음원)<br>
+    스트리밍 플러스: 10,900원 (오프라인 재생)<br>
+    스트리밍 클럽: 7,900원 <br>
+    모바일 스트리밍 클럽: 6,900원 (모바일 한정)</p>
+    <a href="https://www.melon.com/">Melon</a>
+
+    <h3>VIBE</h3>
+    <p><strong>설명:</strong> KT의 음악 스트리밍 서비스로, 고음질 음원을 제공합니다. 다양한 음악 콘텐츠와 함께 AI 기반 음악 추천 기능을 제공하며, 음악 감상 외에도 라이브 스트리밍, 뮤직비디오 등을 즐길 수 있습니다.</p>
+    <p><strong>요금제:</strong><br>
+    월간: 8,800원<br>
+    1년 약정: 7,480원<br>
+    1년 선 결제: 89,760원<br>
+    대학생: 7,216원</p>
+    <a href="https://vibe.co.kr/">VIBE</a>
+
+    <h3>지니 뮤직 (Genie Music)</h3>
+    <p><strong>설명:</strong> LG U+의 음악 스트리밍 서비스로, 다양한 장르의 음악과 함께 음악 커뮤니티를 제공합니다. 음악 감상 외에도 라디오, 뮤직비디오 등 다양한 기능을 이용할 수 있습니다.</p>
+    <p><strong>요금제:</strong><br>
+    음악감상: 8,400원/월<br>
+    스마트 음악감상: 7,400원/월 (모바일)<br>
+    데이터 세이프 음악감상: 10,900원/월</p>
+    <a href="https://www.genie.co.kr/">Genie Music</a>
+
+    <h3>플로 (FLO)</h3>
+    <p><strong>설명:</strong> SK텔레콤의 음악 스트리밍 서비스로, 웨이브와 연동하여 다양한 콘텐츠를 즐길 수 있습니다. 개인 맞춤형 음악 추천, 고음질 음원 등을 제공하며, 음악 감상 외에도 다양한 이벤트를 진행합니다.</p>
+    <p><strong>요금제:</strong> (정기권)<br>
+    무제한 듣기+오프라인 재생: 10,900원/월<br>
+    정기 결제: 7,900원/월<br>
+    모바일 무제한 듣기: 6,900원/월</p>
+    <a href="https://www.music-flo.com/">FLO</a>
+    <button class="button" onclick="hidePopup()">닫기</button>
+    <button class="button" onclick="hidePopup(); document.getElementById('entertainmentPopup').style.display = 'block';">뒤로 가기</button>
+
+</div>
+
+<!-- 오디오북 및 전자책 팝업 -->
+<div id="audiobookPopup" class="popup">
+    <h2>오디오북 및 전자책</h2>
+    <p>오디오북 및 전자책 서비스로는 리디북스, 오디언, 그리고 네이버 책 등이 있으며, 다양한 콘텐츠를 오디오 형식으로 즐길 수 있습니다.</p>
+    
+    <h3>밀리의 서재</h3>
+    <p>설명: 다양한 분야의 오디오북을 제공하는 서비스입니다. 베스트셀러 소설, 자기계발서, 어린이 도서 등 다양한 장르의 오디오북을 월정액으로 이용할 수 있습니다.</p>
+    <p>요금제:</p>
+    <ul>
+        <li>전자책 월 정기구독: 9,900원/월</li>
+        <li>전자책 연 정기구독: 99,000원/연</li>
+    </ul>
+    <p><a href="https://www.millie.co.kr/">밀리의 서재 방문하기</a></p>
+
+    <h3>리디 (Ridi)</h3>
+    <p>설명: 국내 최대 전자책 플랫폼으로, 다양한 장르의 전자책을 제공합니다. 웹툰, 만화, 소설 등 다양한 콘텐츠를 즐길 수 있으며, 독서 기록 관리 기능도 제공합니다.</p>
+    <p>요금제:</p>
+    <ul>
+        <li>4,900원/월</li>
+    </ul>
+    <p><a href="https://ridibooks.com/">리디 방문하기</a></p>
+
+    <h3>교보 SAM</h3>
+    <p>설명: 교보문고의 전자책 서비스로, 다양한 장르의 전자책과 함께 오디오북, 학습 콘텐츠 등을 제공합니다. 교보문고 오프라인 매장과 연계하여 다양한 이벤트를 진행하기도 합니다.</p>
+    <p>요금제:</p>
+    <ul>
+        <li>sam무제한: 9,900원/월</li>
+        <li>sam무제한 연간 이용권: 78,000원/연</li>
+    </ul>
+    <p><a href="https://sam.kyobobook.co.kr/">교보 SAM 방문하기</a></p>
+
+    <button class="button" onclick="hidePopup()">닫기</button>
+    <button class="button" onclick="hidePopup(); document.getElementById('entertainmentPopup').style.display = 'block';">뒤로 가기</button>
+</div>
+
+<!-- 게임 및 기술 팝업 -->
+<div id="gameTechPopup" class="popup" style="display:none;">
+    <h2>게임 및 기술 서비스</h2>
+    
+    <h3>게임</h3>
+    
+    <h4>1. MS Xbox Game Pass</h4>
+    <p><a href="https://www.xbox.com/ko-KR/xbox-game-pass" target="_blank">https://www.xbox.com/ko-KR/xbox-game-pass</a></p>
+    <ul>
+        <li><strong>Xbox Game Pass Ultimate (월 $19.99):</strong> 콘솔, PC, 클라우드에서 게임을 이용할 수 있고, 온라인 콘솔 멀티플레이어를 포함하는 결제입니다. EA Play 멤버십 포함.</li>
+        <li><strong>Xbox Game Pass for Console (월 $9.99):</strong> Xbox 콘솔에서 게임 라이브러리 이용 가능. PC 게임이나 클라우드 게임은 포함되지 않습니다.</li>
+        <li><strong>PC Game Pass (월 $9.99):</strong> 고품질 PC 게임 라이브러리 이용 가능. 출시 첫날부터 새로운 게임을 이용할 수 있습니다.</li>
+        <li><strong>Xbox Game Pass Core (월 $9.99):</strong> 온라인 멀티플레이어 및 25개 이상의 게임 이용 가능.</li>
+        <li><strong>소비자 주의사항:</strong> 모든 구독 플랜은 자동 갱신되며, 새로운 게임이 정기적으로 추가됩니다.</li>
+    </ul>
+
+    <h4>2. PlayStation Plus</h4>
+    <p><a href="https://www.playstation.com/ko-kr/ps-plus/" target="_blank">https://www.playstation.com/ko-kr/ps-plus/</a></p>
+    <ul>
+        <li><strong>PS Plus Essential:</strong> 월 $9.99 / 분기 $24.99 / 연 $59.99. 온라인 멀티플레이어 접근, 매달 2~3개의 다운로드 가능한 게임 제공.</li>
+        <li><strong>PS Plus Extra:</strong> 월 $14.99 / 분기 $39.99 / 연 $99.99. 최대 400개의 PS4 및 PS5 게임 카탈로그 접근.</li>
+        <li><strong>PS Plus Premium:</strong> 월 $17.99 / 분기 $49.99 / 연 $119.99. 최대 340개의 추가 게임 포함.</li>
+    </ul>
+
+    <h4>3. 닌텐도 온라인</h4>
+    <p><a href="https://store.nintendo.co.kr/" target="_blank">https://store.nintendo.co.kr/</a></p>
+    <ul>
+        <li><strong>개인 요금제:</strong> 월간: 약 3.99달러, 3개월: 약 19.99달러, 연간: 약 39.99달러.</li>
+        <li><strong>가족 요금제:</strong> 연간: 약 34.99달러 (최대 8명의 가족이 함께 사용 가능).</li>
+        <li><strong>포함된 서비스:</strong> 온라인 멀티플레이, 클라우드 저장, 고전 게임 라이브러리.</li>
+    </ul>
+
+    <h4>4. Apple Arcade</h4>
+    <p><a href="https://www.apple.com/apple-arcade/" target="_blank">https://www.apple.com/apple-arcade/</a></p>
+    <ul>
+        <li><strong>개인 요금제:</strong> 월간: 약 4.99달러.</li>
+        <li><strong>가족 요금제:</strong> 월간: 약 4.99달러 (최대 6명이 가족 공유 가능).</li>
+        <li><strong>포함된 서비스:</strong> 200개 이상의 게임에 무제한 접근, 모든 게임은 광고 없이 즐길 수 있음.</li>
+    </ul>
+
+    <h3>기술 및 소프트웨어</h3>
+
+    <h4>1. Adobe Creative Cloud</h4>
+    <p><a href="https://creativecloud.adobe.com/ko" target="_blank">https://creativecloud.adobe.com/ko</a></p>
+    <ul>
+        <li><strong>개인 요금제:</strong> 모든 앱 플랜: 월 $54.99, 단일 앱 플랜: 월 $20.99.</li>
+        <li><strong>학생 및 교사 요금제:</strong> 모든 앱 플랜: 월 $19.99 (학생 인증 필요).</li>
+        <li><strong>소비자 주의사항:</strong> 자동 갱신, 할인 프로모션 등이 있음.</li>
+    </ul>
+
+    <h4>2. Microsoft 365</h4>
+    <p><a href="https://www.microsoft.com/ko-kr/microsoft-365" target="_blank">https://www.microsoft.com/ko-kr/microsoft-365</a></p>
+    <ul>
+        <li><strong>개인 요금제:</strong> 월 $6.99 또는 연 $69.99.</li>
+        <li><strong>가족 요금제:</strong> 월 $9.99 또는 연 $99.99 (최대 6명까지 사용 가능).</li>
+    </ul>
+
+    <h4>3. Google Drive</h4>
+    <p><a href="https://workspace.google.com/intl/ko/products/drive/" target="_blank">https://workspace.google.com/intl/ko/products/drive/</a></p>
+    <ul>
+        <li><strong>무료 요금제:</strong> 기본 제공 용량: 15GB.</li>
+        <li><strong>유료 요금제:</strong> 100GB: 월 $1.99, 200GB: 월 $2.99, 2TB: 월 $9.99.</li>
+    </ul>
+
+    <h4>4. Dropbox</h4>
+    <p><a href="https://www.dropbox.com/ko/" target="_blank">https://www.dropbox.com/ko/</a></p>
+    <ul>
+        <li><strong>무료 요금제:</strong> 기본 2GB의 저장 용량.</li>
+        <li><strong>유료 요금제:</strong> Plus: 월 $11.99, Family: 월 $19.99, Professional: 월 $19.99.</li>
+    </ul>
+
+    <h4>5. iCloud</h4>
+    <p><a href="https://www.icloud.com/" target="_blank">https://www.icloud.com/</a></p>
+    <ul>
+        <li><strong>무료 요금제:</strong> 5GB의 저장 용량 제공.</li>
+        <li><strong>유료 요금제:</strong> 50GB: 월 $0.99, 200GB: 월 $2.99, 2TB: 월 $9.99.</li>
+    </ul>
+
+    <h4>6. Zoom Premium</h4>
+    <p><a href="https://zoom.us/ko/pricing" target="_blank">https://zoom.us/ko/pricing</a></p>
+    <ul>
+        <li><strong>Pro 요금제:</strong> 월 $14.99, 최대 100명 참석 가능.</li>
+        <li><strong>Business 요금제:</strong> 월 $19.99, 최대 300명 참석 가능.</li>
+    </ul>
+
+    <h4>7. Slack Plus</h4>
+    <p><a href="https://slack.com/intl/ko-kr/pricing/businessplus" target="_blank">https://slack.com/intl/ko-kr/pricing/businessplus</a></p>
+    <ul>
+        <li><strong>요금제:</strong> 사용자당 월 $12.50 (연간 결제 시).</li>
+        <li><strong>기능:</strong> 무제한 메시지 검색, 그룹 및 1:1 화상 통화.</li>
+    </ul>
+
+    <button class="button" onclick="hidePopup('gameTechPopup')">닫기</button>
+</div>
+
+
+<!-- 팝업 오버레이 -->
+<div id="popupOverlay" class="popup-overlay" onclick="hidePopup()"></div>
+
+<script>
+    function showPopup(popupId) {
+        document.getElementById(popupId).style.display = 'block';
+        document.getElementById('popupOverlay').style.display = 'block';
+    }
+
+    function hidePopup() {
+        document.querySelectorAll('.popup').forEach(popup => {
+            popup.style.display = 'none';
+        });
+        document.getElementById('popupOverlay').style.display = 'none';
+    }
+</script>
+
+<!-- 건강 및 피트니스 팝업 -->
+<div id="healthFitnessPopup" class="popup" style="display:none;">
+    <h2>건강 및 피트니스 서비스</h2>
+
+    <h3>1. Apple Fitness+</h3>
+    <p>구독료: 월 약 13,486원 / 연간 약 107,986원.</p>
+    <p>Apple Watch 사용자는 Fitness+를 3개월 무료로 이용할 수 있습니다.</p>
+    <p>제공 정보: 다양한 운동 동영상(예: HIIT, 요가, 코어 운동 등)을 제공하며, 개인의 운동 성과를 실시간으로 보여줍니다. Apple Watch와 연동되어 심박수 등의 피드백을 실시간으로 받을 수 있습니다. 또한, 가족 최대 6명과 계정을 공유할 수 있습니다.</p>
+    <p><a href="https://www.apple.com/apple-fitness-plus/" target="_blank">https://www.apple.com/apple-fitness-plus/</a></p>
+
+    <h3>2. 클래스패스 (ClassPass)</h3>
+    <p>구독료: 월 약 25,650원 (선택한 계획에 따라 가격이 다릅니다. 각 계획은 특정 수의 클래스 수를 제공합니다).</p>
+    <p>제공 정보: 다양한 헬스장과 스튜디오에서 운동 클래스를 예약하고 이용할 수 있는 서비스입니다. 사용자는 클래스에 따라 다양한 운동을 경험할 수 있습니다.</p>
+    <p><a href="https://classpass.com/" target="_blank">https://classpass.com/</a></p>
+
+    <h3>3. MyFitnessPal Premium</h3>
+    <p>구독료: 월 약 13,486원 / 연간 약 107,986원.</p>
+    <p>제공 정보: 개인의 영양 섭취 및 운동 관리를 도와주는 앱으로, 음식 기록, 칼로리 추적, 운동 계획 기능이 포함되어 있습니다. 추가적으로 프리미엄 회원은 광고 없이 이용할 수 있고, 더 많은 맞춤형 기능을 제공받습니다.</p>
+    <p><a href="https://www.myfitnesspal.com/" target="_blank">https://www.myfitnesspal.com/</a></p>
+
+    <h3>4. Nike Training Club</h3>
+    <p>구독료: 기본 서비스는 무료이며, 프리미엄 구독 시 월 약 16,198원 / 연간 약 161,986원.</p>
+    <p>제공 정보: 다양한 운동 프로그램과 강사를 통해 운동을 지원하며, 비디오 및 오디오 지침을 통해 운동할 수 있습니다. 무료 버전에서도 상당수의 운동 프로그램을 이용할 수 있습니다.</p>
+    <p><a href="https://www.nike.com/ntc-app" target="_blank">https://www.nike.com/ntc-app</a></p>
+
+    <h3>5. Fiit</h3>
+    <p>구독료: 월 약 34,000원 / 연간 약 204,000원. 신규가입자는 2주 무료체험 가능.</p>
+    <p>제공 정보: 다양한 운동 영상과 함께 심박수 모니터링 기능을 제공하여 운동 성과를 극대화할 수 있도록 돕습니다. 개인 맞춤형 피트니스 계획을 제공받을 수 있습니다.</p>
+    <p><a href="https://fiit.tv/" target="_blank">https://fiit.tv/</a></p>
+
+    <button class="button" onclick="hidePopup('healthFitnessPopup')">닫기</button>
+</div>
+
+<!-- 소비 및 배달 서비스 팝업 -->
+<div id="consumerGoodsPopup" class="popup" style="display:none;">
+    <h2>소비 및 배달 서비스</h2>
+
+    <h3>1. 마켓컬리</h3>
+    <p>구독료: 9,900원/월 (무료배송)</p>
+    <p>기본 정보: 마켓컬리는 신선한 식료품과 다양한 프리미엄 상품을 제공하는 온라인 마켓입니다. 고객은 매일 24시간 이내에 신선한 식료품을 받을 수 있으며, 높은 품질의 국내 및 수입 상품을 구매할 수 있습니다. 정기적으로 업데이트되는 특가 상품도 있어 경제적인 쇼핑이 가능합니다.</p>
+    <p><a href="https://www.kurly.com" target="_blank">https://www.kurly.com</a></p>
+
+    <h3>2. 배달의 민족</h3>
+    <p>구독료: 4,900원/월 (배달비 할인)</p>
+    <p>기본 정보: 배달의 민족은 다양한 음식점에서 음식 배달 서비스를 제공하는 플랫폼으로, 사용자는 모바일 앱을 통해 쉽게 음식을 주문할 수 있습니다. 구독 서비스에 가입하면 배달비가 할인되며, 특별한 프로모션 및 이벤트를 통해 추가적인 혜택도 받을 수 있습니다.</p>
+    <p><a href="https://www.baedal-ui-minjok.com" target="_blank">https://www.baedal-ui-minjok.com</a></p>
+
+    <h3>3. 쿠팡 로켓와우</h3>
+    <p>구독료: 4,900원/월 (로켓배송 무료)</p>
+    <p>기본 정보: 쿠팡은 로켓배송 서비스를 통해 주문한 상품을 빠르게 배송받을 수 있는 온라인 쇼핑 플랫폼입니다. 로켓와우 구독 서비스에 가입하면 무료 배송 혜택 외에도 다양한 이벤트 및 할인 혜택이 제공되어 효율적인 쇼핑이 가능합니다.</p>
+    <p><a href="https://www.coupang.com" target="_blank">https://www.coupang.com</a></p>
+
+    <h3>4. 제이브로스 베이커리 구독</h3>
+    <p>구독료: 9,800원/월 (주 2회 베이커리 제품 배송)</p>
+    <p>기본 정보: 제이브로스는 다양한 신선한 빵과 디저트를 정기적으로 배송하는 서비스입니다. 회원가입을 통해 매주 선택한 제품을 집에서 편리하게 받을 수 있으며, 품질 높은 재료로 만든 프리미엄 제품들을 제공합니다.</p>
+    <p><a href="https://www.jaybros.com" target="_blank">https://www.jaybros.com</a></p>
+
+    <h3>5. 파리바게뜨 구독 서비스</h3>
+    <p>구독료: 14,000원/월 (주 2회 상품 제공)</p>
+    <p>기본 정보: 파리바게뜨는 매일 신선한 빵과 다양한 디저트를 정기적으로 배송하는 구독 서비스를 제공합니다. 고객은 원하는 종류의 빵을 선택하여 배달받을 수 있으며, 특별한 날에 맞춘 이벤트 상품도 제공됩니다.</p>
+    <p><a href="https://www.parisbaguette.co.kr" target="_blank">https://www.parisbaguette.co.kr</a></p>
+
+    <h3>6. 클로짓 쉐어 (ClosetShare)</h3>
+    <p>구독료: 19,800원/월</p>
+    <p>기본 정보: 클로짓 쉐어는 사용자에게 다양한 스타일의 의류를 빌려 입을 수 있는 서비스입니다. 회원은 최신 패션 아이템을 정기적으로 받아볼 수 있으며, 필요한 경우 언제든지 반납하거나 교환할 수 있습니다. 환경을 고려한 지속 가능한 패션 소비를 지향합니다.</p>
+    <p><a href="https://www.closetshare.co.kr" target="_blank">https://www.closetshare.co.kr</a></p>
+
+    <h3>7. 와이즐리</h3>
+    <p>구독료: 9,800원/월</p>
+    <p>기본 정보: 와이즐리는 개인의 스타일에 맞춘 의류를 주기적으로 배송받는 서비스로, 사용자는 스타일링 서비스를 통해 다양한 코디를 경험할 수 있습니다. 또한, 정기적으로 새로운 의류를 받아볼 수 있어 패션에 대한 관심을 더욱 높일 수 있습니다.</p>
+    <p><a href="https://www.wisely.co.kr" target="_blank">https://www.wisely.co.kr</a></p>
+
+    <h3>8. Tons28</h3>
+    <p>구독료: 12,000원/월</p>
+    <p>기본 정보: Tons28은 사용자가 다양한 패션 아이템을 정기적으로 배송받을 수 있는 서비스입니다. 계절별 트렌드에 맞춘 스타일링과 다양한 패션 아이템을 제공하여 사용자에게 최신 패션을 손쉽게 경험하게 합니다.</p>
+    <p><a href="https://www.tons28.co.kr" target="_blank">https://www.tons28.co.kr</a></p>
+
+    <h3>9. 현대 셀렉션</h3>
+    <p>구독료: 29,000원/월 (기본 요금)</p>
+    <p>기본 정보: 현대차의 다양한 차종을 선택하여 이용할 수 있는 구독 서비스입니다. 사용자는 원하는 차량을 선택하고, 계약 기간 동안 정기적으로 차량을 이용할 수 있는 혜택이 있습니다.</p>
+    <p><a href="https://www.hyundai-selection.com" target="_blank">https://www.hyundai-selection.com</a></p>
+
+    <h3>10. 기아 플렉스</h3>
+    <p>구독료: 30,000원/월 (기본 요금)</p>
+    <p>기본 정보: 기아의 차량을 구독할 수 있는 서비스로, 사용자는 다양한 차종을 선택하고 필요에 따라 차량을 이용할 수 있습니다. 정기적인 차량 점검과 유지보수 서비스도 제공됩니다.</p>
+    <p><a href="https://www.kia.com/kr" target="_blank">https://www.kia.com/kr</a></p>
+
+    <button class="button" onclick="hidePopup('consumerGoodsPopup')">닫기</button>
+</div>
+
+
+<!-- 팝업 스타일 -->
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+    }
+
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9;
+    }
+</style>
+
+    <!-- 팝업 및 오버레이 -->
+    <div id="popupOverlay" class="popup-overlay" onclick="hidePopup()"></div>
+
+
+    <section class="section">
+        <h2>인터뷰 요약</h2>
+        <div class="interview-card">
+            <h3>스타벅스 관계자분과의 인터뷰</h3>
+            <p>스타벅스 관계자는 "버디 패스는 다양한 혜택을 제공하지만, 오후 2시 이후에만 할인 혜택이 적용되는 점에서 소비자에게 다소 아쉬울 수 있습니다. 반면, 다른 회사의 커피 구독 서비스는 연중 내내 할인과 무료 쿠폰을 제공하기 때문에 소비자에게 나은 서비스가 될 수 있습니다."라고 전했다.</p>
+            <button class="button" onclick="showPopup('interview1Popup')">자세히 보기</button>
+        </div>
+        <div class="interview-card">
+            <h3>KBS 대전 총국 PD분과의 인터뷰</h3>
+            <p>OTT의 구독자 수와 시청률이 증가하면서 KBS는 기존 아카이빙과 기술을 활용해 콘텐츠 접근성의 용이함을 극대화하고 있다. 방송국은 많은 자료와 스태프가 필요한 롱폼 콘텐츠 제작에 강점을 가진다. OTT 플랫폼의 성장은 지상파 콘텐츠에도 긍정적인 영향을 미치며, KBS 콘텐츠의 접근성이 용이해졌다.</p>
+            <button class="button" onclick="showPopup('interview2Popup')">자세히 보기</button>
+        </div>
+    </section>
+    
+    <script>
+        function showPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
+            document.getElementById('popupOverlay').style.display = 'block';
+        }
+
+        function hidePopup() {
+            document.querySelectorAll('.popup').forEach(popup => {
+                popup.style.display = 'none';
+            });
+            document.getElementById('popupOverlay').style.display = 'none';
+        }
+    </script>    
+
+    <!-- 팝업 및 오버레이 -->
+    <div id="popupOverlay" class="popup-overlay" onclick="hidePopup()"></div>
+
+   <div id="interview1Popup" class="popup">
+    <h2>스타벅스 관계자분과의 인터뷰</h2>
+    <div class="popup-content">
+        <p>스타벅스 코리아가 개점 25주년을 기념해 10월 1일부터 구독 서비스 '버디 패스(Buddy Pass)'를 시범 운영한다. 구독료는 30일 동안 9,900원이며, 운영 기간은 10월 1일부터 12월 31일까지 약 3개월이다.</p>
+        <p>버디 패스에는 매일 발급되는 제조 음료 30% 할인 쿠폰, 푸드 30% 할인 쿠폰, 딜리버스 배달비 무료 쿠폰, 온라인스토어 배송비 무료 쿠폰이 포함된다. 제조 음료 할인 쿠폰은 오후 2시부터 사용 가능하며, 모든 스타벅스 주문에 적용된다. 푸드 할인 쿠폰은 매달 1장이 제공되며, 딜리버스와 온라인스토어 배송비 쿠폰은 최소 주문 금액 이용 시 사용할 수 있다. 모든 쿠폰은 제조 음료 할인 쿠폰과 중복 적용할 수 있다.</p>
+        <p>스타벅스 관계자는 "버디 패스는 다양한 혜택을 제공하지만, 오후 2시 이후에만 할인 혜택이 적용되는 점에서 소비자에게 다소 아쉬울 수 있습니다. 반면, 다른 회사의 커피 구독 서비스는 연중 내내 할인과 무료 쿠폰을 제공하기 때문에 소비자에게 나은 서비스가 될 수 있습니다."라고 전했다.</p>
+    </div>
+    <button class="button" onclick="hidePopup()">닫기</button>
+</div>
+
+
+
+    <div id="interview2Popup" class="popup">
+        <h2>KBS 대전 총국 PD분과의 인터뷰</h2>
+        <p>주로 시사 교양, 휴먼, 자연 다큐멘터리 등의 콘텐츠를 제작하며, SPOTV, NETFLIX, 쿠팡플레이, 티빙, 웨이브 같은 다양한 OTT 플랫폼을 이용하고 있다.</p>
+        <p>OTT의 구독자 수와 시청률이 증가하면서 KBS는 기존 아카이빙과 기술을 활용해 콘텐츠 접근성의 용이함을 극대화하고 있다. 방송국은 많은 자료와 스태프가 필요한 롱폼 콘텐츠 제작에 강점을 가진다. 다큐멘터리 제작에서도 두각을 나타내고 있다. 예를 들어, 청산리 전투의 재구성 다큐멘터리는 대전과 가까운 위치 덕분에 성공적으로 제작되었다.</p>
+        <p>OTT의 성장이 KBS의 시청률에 긍정적인 영향을 미치고 있으며, 고려 거란 전쟁과 같은 KBS 콘텐츠는 OTT(넷플릭스)에서도 방영되고 있다. 대전 지역 총국은 OTT와의 협력을 통해 접근성 문제를 효과적으로 해결하고 있어, 앞으로도 더욱 다양한 콘텐츠를 선보일 수 있는 기반을 다지고 있다.</p>
+        <button class="button" onclick="hidePopup()">닫기</button>
+    </div>
+
+    <script>
+        function showPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
+            document.getElementById('popupOverlay').style.display = 'block';
+        }
+
+        function hidePopup() {
+            document.querySelectorAll('.popup').forEach(popup => {
+                popup.style.display = 'none';
+            });
+            document.getElementById('popupOverlay').style.display = 'none';
+        }
+    
+        // 설문조사 데이터 시각화
+        document.addEventListener('DOMContentLoaded', () => {
+        const subscriptionUsersCtx = document.getElementById('subscriptionUsersChart').getContext('2d');
+        const subscriptionPerceptionCtx = document.getElementById('subscriptionPerceptionChart').getContext('2d');
+        const sharingUsageCtx = document.getElementById('sharingUsageChart').getContext('2d');
+        const sharingPerceptionCtx = document.getElementById('sharingPerceptionChart').getContext('2d');
+        const subscriptionVsSharingCtx = document.getElementById('subscriptionVsSharingChart').getContext('2d');
+
+        // 구독 서비스별 사용자 수 (Bar Chart) - 제목 추가
+            new Chart(subscriptionUsersCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['쿠팡 플레이', '넷플릭스', '티빙', '디즈니+', '왓챠', '웨이브', '유튜브 프리미엄', '아이클라우드', '멜론', 'ChatGPT', '스포티파이'],
+                    datasets: [{
+                        label: '사용자 수',
+                        data: [29, 34, 19, 9, 1, 11, 8, 3, 2, 4, 4],
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '구독 서비스별 사용자 수'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // 구독 경제에 대한 인식 (Doughnut Chart) - 제목 및 % 추가
+            new Chart(subscriptionPerceptionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['긍정적', '보통', '부정적'],
+                    datasets: [{
+                        label: '구독 경제 인식',
+                        data: [61, 5, 10],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(255, 99, 132, 0.6)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    const total = tooltipItem.dataset.data.reduce((sum, val) => sum + val, 0);
+                                    const value = tooltipItem.raw;
+                                    const percentage = ((value / total) * 100).toFixed(2);
+                                    return `${value}명 (${percentage}%)`;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: '구독 경제에 대한 인식'
+                        }
+                    }
+                }
+            });
+
+            // 공유 경제 사용 비율 (Pie Chart) - 제목 및 % 추가
+            new Chart(sharingUsageCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['전동 킥보드 및 자전거', '숙박 공유', '카세어링', '승차 공유', '없음'],
+                    datasets: [{
+                        label: '공유 경제 사용 비율',
+                        data: [36, 21, 17, 19, 16],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    const total = tooltipItem.dataset.data.reduce((sum, val) => sum + val, 0);
+                                    const value = tooltipItem.raw;
+                                    const percentage = ((value / total) * 100).toFixed(2);
+                                    return `${value}명 (${percentage}%)`;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: '공유 경제 사용 비율'
+                        }
+                    }
+                }
+            });
+
+            // 공유 경제에 대한 인식 (Doughnut Chart) - 제목 및 % 추가
+            new Chart(sharingPerceptionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['긍정적', '보통', '부정적'],
+                    datasets: [{
+                        label: '공유 경제 인식',
+                        data: [55, 12, 9],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(255, 99, 132, 0.6)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    const total = tooltipItem.dataset.data.reduce((sum, val) => sum + val, 0);
+                                    const value = tooltipItem.raw;
+                                    const percentage = ((value / total) * 100).toFixed(2);
+                                    return `${value}명 (${percentage}%)`;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: '공유 경제에 대한 인식'
+                        }
+                    }
+                }
+            });
+
+            // 구독 경제 vs 공유 경제 플랫폼 사용 비율 (Bar Chart) - 제목 추가
+            new Chart(subscriptionVsSharingCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['구독 경제 (총 사용자 수)', '공유 경제 (총 사용자 수)'],
+                    datasets: [{
+                        label: '사용자 수 비교',
+                        data: [98, 67],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 99, 132, 0.6)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '구독 경제 vs 공유 경제 사용자 수 비교'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script></body></html>
