@@ -79,25 +79,65 @@
         <p>소비 패턴의 변화에 대한 조사와 플랫폼 추천</p>
     </header>
 
-    <section class="section">
+<!-- 헤더 섹션 추가 (기존 코드와 충돌 방지) -->
+<header id="customHeader">
+    <nav>
+        <ul class="custom-navigation">
+            <li><a href="#literatureReview">문헌 연구</a></li>
+            <li><a href="#dataVisualization">데이터 시각화</a></li>
+            <li><a href="#surveyResults">설문 조사 결과</a></li>
+            <li><a href="#serviceRecommendation">카테고리별 구독 및 공유 경제 서비스 추천</a></li>
+            <li><a href="#interviewSummary">인터뷰 요약</a></li>
+            <li><a href="#researchConclusion">연구 결론</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- 스타일 추가 (고유한 클래스명 사용) -->
+<style>
+    #customHeader {
+        background-color: #f8f9fa;
+        padding: 10px 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .custom-navigation {
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0;
+    }
+    .custom-navigation li {
+        margin: 0 10px;
+    }
+    .custom-navigation a {
+        text-decoration: none;
+        color: #3780bf;
+        font-weight: bold;
+    }
+    .custom-navigation a:hover {
+        color: #0056b3;
+    }
+</style>
+    <section class="section" id='literatureReview'>
     <h2>문헌 연구</h2>
-    <p>*파란색 팝업 버튼을 누르세요</p> 
     <ul>
-        <li>
-            <h3><button class="button" onclick="showPopup('sharingEconomyPopup')">공유 경제</button></h3>
+        <li><p>공유 경제</p>
             <p>자원의 최적화를 목표로 하며, 개인이 자산을 공유하여 소득을 창출하는 모델입니다.</p>
+            <h3><button class="button" onclick="showPopup('sharingEconomyPopup')">자세히 보기</button></h3>
         </li>
-        <li>
-            <h3><button class="button" onclick="showPopup('subscriptionEconomyPopup')">구독 경제</button></h3>
+        <li><p>구독 경제</p>
             <p>소유보다는 지속적인 접근에 중점을 두며, 안정적인 수익 흐름을 보장하는 모델입니다.</p>
+            <h3><button class="button" onclick="showPopup('subscriptionEconomyPopup')">자세히 보기</button></h3>
         </li>
-        <li>
-            <h3><button class="button" onclick="showPopup('sharingNegativesPopup')">공유 경제의 부정적 측면</button></h3>
+        <li><p>공유 경제의 부정적 측면</p>
             <p>규제 문제와 시장 독점화 위험이 존재합니다.</p>
+            <h3><button class="button" onclick="showPopup('sharingNegativesPopup')">자세히 보기</button></h3>
         </li>
-        <li>
-            <h3><button class="button" onclick="showPopup('subscriptionNegativesPopup')">구독 경제의 부정적 측면</button></h3>
+        <li><p>구독 경제의 부정적 측면</p>
             <p>데이터 프라이버시 우려와 과소비 문제를 초래할 수 있습니다.</p>
+            <h3><button class="button" onclick="showPopup('subscriptionNegativesPopup')">자세히 보기</button></h3>
         </li>
     </ul>
 </section>
@@ -176,7 +216,7 @@
 </style>
 
 
-    <section class="section">
+    <section class="section" id='dataVisualization'>
     <h2>데이터 시각화</h2>
 
     <div class="chart-container">
@@ -200,7 +240,7 @@
     </div>
 </section>
 
-<section class="section">
+<section class="section" id='surveyResults'>
     <h2>설문 조사 결과</h2>
     <p>설문 조사 결과, 구독 경제와 공유 경제에 대한 인식과 실제 사용 현황을 확인할 수 있었습니다.</p>
     <h3>구독 경제 플랫폼 사용 현황</h3>
@@ -248,33 +288,38 @@
     </ul>
 </section>
 
-<section class="section">
+<section class="section" id='serviceRecommendation'>
     <h2>카테고리별 구독 및 공유 경제 서비스 추천</h2>
     <ul>
-        <li>
-            <h3><button class="button" onclick="showPopup('entertainmentPopup')">엔터테인먼트 (Entertainment)</button></h3>
+        <li><p>엔터테인먼트 (Entertainment)</p>
             <p>영화, 음악, 게임 등 다양한 콘텐츠를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 넷플릭스, 스포티파이, 게임 공유 플랫폼 등이 있습니다.</p>
+            <h3><button class="button" onclick="showPopup('entertainmentPopup')">플랫폼 보기</button></h3>
         </li>
-        <li>
-            <h3><button class="button" onclick="showPopup('gameTechPopup')">게임 및 기술 (Gaming & Technology)</button></h3>
+        <li><p>게임 및 기술 (Gaming & Technology</p>
             <p>게임, 소프트웨어, 하드웨어 등 기술 관련 제품 및 서비스를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 클라우드 게임 서비스, 소프트웨어 구독 서비스 등이 있습니다.</p>
+            <h3><button class="button" onclick="showPopup('gameTechPopup')">플랫폼 보기</button></h3>
         </li>
-        <li>
-            <h3><button class="button" onclick="showPopup('healthFitnessPopup')">건강 및 피트니스 (Health & Fitness)</button></h3>
+        <li><p>건강 및 피트니스 (Health & Fitness)</p>
             <p>헬스, 요가, 운동 등 건강 관련 서비스를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 온라인 피트니스 클래스, 운동 기구 렌탈 서비스 등이 있습니다.</p>
+            <h3><button class="button" onclick="showPopup('healthFitnessPopup')">플랫폼 보기</button></h3>
         </li>
-        <li>
-            <h3><button class="button" onclick="showPopup('consumerGoodsPopup')">소비 및 배달 서비스 (Consumer Goods & Delivery Services)</button></h3>
+        <li><p>소비 및 배달 서비스 (Consumer Goods & Delivery Services)</p>
             <p>식료품, 생필품 등 다양한 상품을 정기적으로 배송받는 서비스입니다. 대표적인 서비스로는 식료품 정기 배송 서비스, 화장품 구독 서비스 등이 있습니다.</p>
+            <h3><button class="button" onclick="showPopup('consumerGoodsPopup')">플랫폼 보기</button></h3>
         </li>
-        <li>
-            <h3><button class="button" onclick="showPopup('educationLearningPopup')">교육 및 학습 (Education & Learning)</button></h3>
+        <li><p>교육 및 학습 (Education & Learning)</p>
             <p>온라인 강의, 외국어 학습 등 교육 관련 서비스를 구독하는 서비스입니다. 대표적인 서비스로는 온라인 강의 플랫폼, 외국어 학습 앱 등이 있습니다.</p>
+            <h3><button class="button" onclick="showPopup('educationLearningPopup')">플랫폼 보기</button></h3>
         </li>
-        <li>
-            <h3><button class="button" onclick="showPopup('lifestylePopup')">생활 (Lifestyle)</button></h3>
+        <li><p>생활 (Lifestyle)</p>
             <p>미용, 여행, 렌탈 등 다양한 생활 관련 서비스를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 미용 제품 구독 서비스, 여행 상품 구독 서비스 등이 있습니다.</p>
+            <h3><button class="button" onclick="showPopup('lifestylePopup')">플랫폼 보기</button></h3>
         </li>
+        <li><p>이동 수단 및 숙박 (Transportation and Accommodation)</p>
+            <p>승차공유, 차량공유, 숙박공유 등 서비스를 구독하거나 공유하는 서비스입니다. 대표적인 서비스로는 숙박공유 서비스 등이 있습니다.</p>
+            <h3><button class="button" onclick="showPopup('TransportationandAccommodationPopup')">플랫폼 보기</button></h3>
+        </li>
+        
     </ul>
 </section>
 
@@ -687,6 +732,89 @@
     <button class="button" onclick="hidePopup('consumerGoodsPopup')">닫기</button>
 </div>
 
+    <!-- 숙박 및 이동 공유 팝업 -->
+  <div id="TransportationandAccommodationPopup" class="popup" style="display:none;">
+    <h2>이동 수단 및 숙박 (Transportation & Accommodation)</h2>
+    <ul>
+        <li><button class="button" onclick="showPopup('TransportationPopup')">승차 공유</button></li>
+        <li><button class="button" onclick="showPopup('vehiclePopup')">차량 공유</button></li>
+        <li><button class="button" onclick="showPopup('bicyclePopup')">숙박 공유</button></li>
+    </ul>
+    <button class="button" onclick="hidePopup('TransportationandAccommodationPopup')">닫기</button>
+  </div>
+
+<!-- 승차 공유 팝업 -->
+<div id="TransportationPopup" class="popup" style="display:none;">
+    <h2>승차 공유 (Ride Sharing)</h2>
+    <ul>
+        <li>
+            <h3>우버 택시 (Uber Taxi)</h3>
+            <p>설명: 전 세계적으로 가장 유명한 승차 공유 서비스입니다. 스마트폰 앱 하나로 택시를 호출할 수 있으며, 다양한 차종과 할인 혜택을 제공합니다. 특히, 해외 여행 시에도 편리하게 이용할 수 있다는 점이 큰 장점입니다.</p>
+            <p>요금: 거리에 따라 상이</p>
+            <a href="https://www.uber.com/kr/ko/ride/ubertaxi/" target="_blank">우버 택시 바로가기</a>
+        </li>
+        <li>
+            <h3>이응버스 (Ieung Bus)</h3>
+            <p>설명: 도심형 수요응답버스(DRT)로, 셔클에서 이름이 바뀌었습니다. AI를 활용해 승객의 수요를 반영하여 실시간으로 최적 경로를 만들어 운행합니다. '이응'앱을 통해 이용 가능하며, 최대 12인이 승차할 수 있습니다.</p>
+            <p>요금: 어린이 800원, 청소년 1,400원, 성인 1,800원</p>
+        </li>
+    </ul>
+    <button class="button" onclick="hidePopup('TransportationPopup')">닫기</button>
+    <button class="button" onclick="hidePopup(); document.getElementById('entertainmentPopup').style.display = 'block';">뒤로 가기</button>
+
+</div>
+
+<!-- 차량 공유 팝업 -->
+<div id="vehiclePopup" class="popup" style="display:none;">
+    <h2>차량 공유 (Car Sharing)</h2>
+    <ul>
+        <li>
+            <h3>쏘카 (SoCar)</h3>
+            <p>설명: 한국 최대의 차량 공유 플랫폼입니다. 최소 30분부터 10분 단위로 대여 가능합니다. 차량 반납 시 주행요금이 주행거리에 비례하여 추가로 부여됩니다.</p>
+            <p>요금: 대여요금: 60,870~287,100원/일, 주행요금: 70~290원/km</p>
+            <a href="https://www.socar.kr/" target="_blank">쏘카 바로가기</a>
+        </li>
+        <li>
+            <h3>그린카 (GreenCar)</h3>
+            <p>설명: 롯데 렌탈의 차량 공유 플랫폼입니다. 최소 30분부터 10분 단위로 대여 가능합니다. 차량 반납 시 주행요금이 주행거리에 비례하여 추가로 부여됩니다.</p>
+            <p>요금: 대여요금: 25,000~40,000원/시간, 주행요금: 70~300원/km</p>
+            <a href="https://www.greencar.co.kr/" target="_blank">그린카 바로가기</a>
+        </li>
+        <li>
+            <h3>어울링 (Eoulling)</h3>
+            <p>설명: 세종시 공영자전거 서비스입니다. 스마트폰 QR 코드로 쉽게 대여하고 반납 가능한 대중교통 수단입니다. 일반 자전거 거치대를 대여소로 사용하며, 이용 가능 대여소는 어울링 앱에서 확인할 수 있습니다.</p>
+            <p>요금제: 정회원: 2,500원/주, 5,000원/월, 일반 회원: 1,000원/일</p>
+            <p>추가요금: 정회원 90분 이후 500원/30분, 일반회원 90분 이후 1,000원/30분</p>
+            <a href="https://www.sejongbike.kr/" target="_blank">어울링 바로가기</a>
+        </li>
+    </ul>
+    <button class="button" onclick="hidePopup('vehiclePopup')">닫기</button>
+    <button class="button" onclick="hidePopup(); document.getElementById('entertainmentPopup').style.display = 'block';">뒤로 가기</button>
+
+</div>
+
+<!-- 숙박 공유 팝업 -->
+<div id="bicyclePopup" class="popup" style="display:none;">
+    <h2>숙박 공유 (Accommodation Sharing)</h2>
+    <ul>
+        <li>
+            <h3>에어비엔비 (Airbnb)</h3>
+            <p>설명: 세계 최대 숙박 공유 플랫폼입니다. 아직까지 한국에서 에어비앤비는 외국인 관광객만 이용할 수 있으나, 최근 내국인도 이용 가능하도록 법안 개정이 추진되고 있습니다.</p>
+            <p>요금: 숙소 및 기간 별 상이</p>
+            <a href="https://www.airbnb.co.kr/" target="_blank">에어비엔비 바로가기</a>
+        </li>
+        <li>
+            <h3>위홈 (WeHome)</h3>
+            <p>설명: 한국의 숙박업 관련 법률을 준수하며, 내국인의 합법적인 숙박 공유 서비스를 제공합니다. 한국 시장에 특화되어 있어 로컬 지원이 빠릅니다.</p>
+            <p>요금: 숙소 및 기간 별 상이</p>
+            <a href="https://www.wehome.me/ko" target="_blank">위홈 바로가기</a>
+        </li>
+    </ul>
+    <button class="button" onclick="hidePopup('bicyclePopup')">닫기</button>
+    <button class="button" onclick="hidePopup(); document.getElementById('entertainmentPopup').style.display = 'block';">뒤로 가기</button>
+
+</div>
+
 
 <!-- 팝업 스타일 -->
 <style>
@@ -718,7 +846,7 @@
     <div id="popupOverlay" class="popup-overlay" onclick="hidePopup()"></div>
 
 
-    <section class="section">
+    <section class="section" id='interviewSummary'>
         <h2>인터뷰 요약</h2>
         <div class="interview-card">
             <h3>스타벅스 관계자분과의 인터뷰</h3>
@@ -769,7 +897,7 @@
         <button class="button" onclick="hidePopup()">닫기</button>
     </div>
 
-    <section class="section">
+    <section class="section" id='researchConclusion'>
         <h2>연구 결론</h2>
         <div class="interview-card">
             <h3>설문 결과와 인터뷰를 바탕으로 한 결론</h3>
